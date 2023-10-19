@@ -1,0 +1,15 @@
+/vendor
+.env
+.env.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+pgadmin4
+.idea
+.vscode
+*.log
+/.vscode/settings.json
+/workbench
+composer.lock
