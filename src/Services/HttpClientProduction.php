@@ -1,0 +1,95 @@
+<?php
+
+namespace SushiMarket\UdsSdk\Services;
+
+use DateTime;
+use DateTimeInterface;
+use GuzzleHttp\MessageFormatter;
+use GuzzleHttp\Middleware;
+use Illuminate\Http\Client\Response;
+use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Http\Client\RequestException;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Psr\Log\LoggerInterface;
+use SushiMarket\UdsSdk\Exceptions\BadRequestException;
+use SushiMarket\UdsSdk\Exceptions\InternalServerErrorException;
+use SushiMarket\UdsSdk\Exceptions\NotFoundException;
+use SushiMarket\UdsSdk\Exceptions\UnauthorizedException;
+use SushiMarket\UdsSdk\Interfaces\HttpClientInterface;
+
+class HttpClientProduction implements HttpClientInterface
+{
+    protected PendingRequest $client;
+
+    public function __construct(string $baseUrl, int $companyId, string $token)
+    {
+        $this->client = Http::baseUrl($baseUrl)->withBasicAuth($companyId, $token);
+        $this->enableThrowing()->enableDebugHeaders()->enableLogging();
+    }
+
+    public function getClient(): PendingRequest
+    {
+        return $this->client;
+    }
+
+    public function getLogger(): LoggerInterface
+    {
+        return Log::build([
+            'driver' => 'daily',
+            'path' => storage_path('logs/laravel-uds-sdk/http-client.log'),
+            'days' => 14,
+        ]);
+    }
+
+    public function enableLogging(): self
+    {
+        $this->getClient()->withMiddleware(Middleware::log(
+            $this->getLogger(),
+            new MessageFormatter("{req_headers}\n{req_body}\n{res_headers}\n{res_body}")
+        ));
+
+        return $this;
+    }
+
+    public function enableDebugHeaders(): self
+    {
+        $this->getClient()->withHeaders([
+            'X-Origin-Request-Id' => Str::uuid()->toString(),
+            'X-Timestamp' => (new DateTime())->format(DateTimeInterface::ATOM)
+        ]);
+
+        return $this;
+    }
+
+    public function enableThrowing(): self
+    {
+        $this->getClient()->throw(fn(Response $response, RequestException $e) => $this->exceptionHandler(...func_get_args()));
+        return $this;
+    }
+
+    /**
+     * @throws BadRequestException
+     * @throws NotFoundException
+     * @throws RequestException
+     * @throws InternalServerErrorException
+     * @throws UnauthorizedException
+     */
+    public function exceptionHandler(Response $response, RequestException $e): void
+    {
+        if ($response->status() >= 500) {
+            throw new InternalServerErrorException($e->getMessage(), $e->response->status());
+        }
+
+        $json = $response->json();
+        if (isset($json['errorCode'])) {
+            throw match($json['errorCode']) {
+                'badRequest' => new BadRequestException(),
+                'unauthorized' => new UnauthorizedException(),
+                'notFound' => new NotFoundException(),
+                default => $e
+            };
+        }
+    }
+}

@@ -1,0 +1,14 @@
+<?php
+
+namespace SushiMarket\UdsSdk\Exceptions;
+
+use Exception;
+use Throwable;
+
+class InternalServerErrorException extends Exception
+{
+    public function __construct(string $message, int $code = 0, Throwable $previous = null)
+    {
+        parent::__construct($message, $code, $previous);
+    }
+}
