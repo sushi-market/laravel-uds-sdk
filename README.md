@@ -7,7 +7,7 @@
     <a href="https://github.com/sushi-market/laravel-uds-sdk/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Software License"></a>
 </p>
 
-## Requirements
+## Требования
 - PHP 8.1, 8.2
 - Laravel 10.0
 - guzzlehttp/guzzle 7.8
