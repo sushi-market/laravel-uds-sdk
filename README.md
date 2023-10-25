@@ -1,6 +1,7 @@
 *UDS Laravel Package* - PHP SDK [Laravel](https://github.com/laravel/laravel) пакет для взаимодействия с API [uds.app](https://uds.app) от [sushi-market](https://sushi-market.com/)
 
 <p align="center">
+    <a href="https://github.com/sushi-market/laravel-uds-sdk/actions"><img src="https://github.com/sushi-market/laravel-uds-sdk/actions/workflows/test.yml/badge.svg" alt="Build Status"></a>
     <a href="https://github.com/sushi-market/laravel-uds-sdk/releases"><img src="https://img.shields.io/github/release/sushi-market/laravel-uds-sdk.svg?style=flat-square" alt="Latest Version"></a>
     <a href="https://packagist.org/packages/sushi-market/laravel-uds-sdk"><img src="https://img.shields.io/packagist/dt/sushi-market/laravel-uds-sdk.svg?style=flat-square" alt="Total Downloads"></a>
     <a href="https://github.com/sushi-market/laravel-uds-sdk/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Software License"></a>
@@ -18,8 +19,17 @@
 composer require sushi-market/laravel-uds-sdk
 ```
 
+## Немного о UDS
+SDK использует api.uds.app/partner/v2
+Всю информацию по ответам и параметрам можно найти в [документации UDS](https://docs.uds.app)
+
 ## Методы
-TODO
+- **Настройки**
+    - [Получение настроек компании](https://github.com/sushi-market/laravel-uds-sdk#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA-%D0%BA%D0%BE%D0%BC%D0%BF%D0%B0%D0%BD%D0%B8%D0%B8)
+- **Операции**
+    - [Рассчитать информацию по операции](https://github.com/sushi-market/laravel-uds-sdk#%D1%80%D0%B0%D1%81%D1%81%D1%87%D0%B8%D1%82%D0%B0%D1%82%D1%8C-%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E-%D0%BF%D0%BE-%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%B8-uds-%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F)
+    - [Проведение операции](https://github.com/sushi-market/laravel-uds-sdk#%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%B8-uds-%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F)
+    - [Операция возврата](https://github.com/sushi-market/laravel-uds-sdk#%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F-%D0%B2%D0%BE%D0%B7%D0%B2%D1%80%D0%B0%D1%82%D0%B0-uds-%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F)
 
 ## Настройки
 ### Получение настроек компании
