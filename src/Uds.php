@@ -143,12 +143,13 @@ class Uds
      * Протестировать введённые $companyId и $apiKey
      *
      * @return bool
+     * @noinspection PhpRedundantCatchClauseInspection
      */
     public function testCredentials(): bool
     {
         try {
             return $this->getSettings()->id === $this->companyId;
-        } catch (UnauthorizedException $e) {
+        } catch (UnauthorizedException) {
             return false;
         }
     }
