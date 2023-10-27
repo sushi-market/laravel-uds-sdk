@@ -5,10 +5,6 @@ namespace SushiMarket\UdsSdk\Resources;
 use Illuminate\Support\Carbon;
 use SushiMarket\UdsSdk\Enums\Action;
 use SushiMarket\UdsSdk\Enums\ActionState;
-use SushiMarket\UdsSdk\Resources\Branch;
-use SushiMarket\UdsSdk\Resources\Cashier;
-use SushiMarket\UdsSdk\Resources\CustomerShortInfo;
-use SushiMarket\UdsSdk\Resources\Origin;
 
 class Transaction
 {
