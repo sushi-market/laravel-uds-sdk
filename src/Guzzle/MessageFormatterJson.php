@@ -12,11 +12,13 @@ class MessageFormatterJson implements MessageFormatterInterface
     public function format(RequestInterface $request, ResponseInterface $response = null, Throwable $error = null): string
     {
         return json_encode([
+            'method' => $request->getMethod(),
+            'url' => $request->getUri(),
+            'status_code' => $response->getStatusCode(),
             'request_headers' => $request->getHeaders(),
             'request_body' => $request->getBody()->getContents(),
             'response_headers' => $response->getHeaders(),
-            'response_body' => $response->getBody()->getContents(),
-            'status_code' => $response->getStatusCode()
+            'response_body' => $response->getBody()->getContents()
         ]);
     }
 }
