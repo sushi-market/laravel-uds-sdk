@@ -4,11 +4,10 @@ namespace SushiMarket\UdsSdk\Services;
 
 use DateTime;
 use DateTimeInterface;
-use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Middleware;
-use Illuminate\Http\Client\Response;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\RequestException;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -17,6 +16,7 @@ use SushiMarket\UdsSdk\Exceptions\BadRequestException;
 use SushiMarket\UdsSdk\Exceptions\InternalServerErrorException;
 use SushiMarket\UdsSdk\Exceptions\NotFoundException;
 use SushiMarket\UdsSdk\Exceptions\UnauthorizedException;
+use SushiMarket\UdsSdk\Guzzle\MessageFormatterJson;
 use SushiMarket\UdsSdk\Interfaces\HttpClientInterface;
 
 class HttpClientProduction implements HttpClientInterface
@@ -47,7 +47,7 @@ class HttpClientProduction implements HttpClientInterface
     {
         $this->getClient()->withMiddleware(Middleware::log(
             $this->getLogger(),
-            new MessageFormatter("{req_headers}\n{req_body}\n{res_headers}\n{res_body}")
+            new MessageFormatterJson()
         ));
 
         return $this;
