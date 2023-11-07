@@ -4,6 +4,7 @@ namespace SushiMarket\UdsSdk\Test;
 
 use SushiMarket\UdsSdk\Exceptions\BadRequestException;
 use SushiMarket\UdsSdk\Exceptions\InternalServerErrorException;
+use SushiMarket\UdsSdk\Exceptions\InvalidCheckSumException;
 use SushiMarket\UdsSdk\Exceptions\NotFoundException;
 use SushiMarket\UdsSdk\Resources\ExternalCashier;
 use SushiMarket\UdsSdk\Resources\Nonce;
@@ -79,6 +80,14 @@ class CreateTransactionTest extends TestCase
     {
         $this->expectException(InternalServerErrorException::class);
         $this->udsServerError->createTransactionByUid(HttpClientFake::UID, ...$this->transactionData);
+    }
+
+    public function test_invalid_check_sum_exception()
+    {
+        $this->expectException(InvalidCheckSumException::class);
+        $transactionData = $this->transactionData;
+        $transactionData[0]['total'] = 10001;
+        $this->uds->createTransactionByCode(HttpClientFake::CODE, ...$transactionData);
     }
 
     public function test_bad_request_exception()

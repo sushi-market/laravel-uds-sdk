@@ -11,6 +11,7 @@ class MessageFormatterJson implements MessageFormatterInterface
 {
     public function format(RequestInterface $request, ResponseInterface $response = null, Throwable $error = null): string
     {
+        $request->getBody()->rewind();
         $request_body = $request->getBody()->getContents();
         $response_body = $response->getBody()->getContents();
 

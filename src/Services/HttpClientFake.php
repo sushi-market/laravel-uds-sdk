@@ -23,6 +23,8 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
 
     public const TRANSACTION_ID = 1234567890;
 
+    public const VALID_TOTAL = 1000;
+
     protected string $authorization;
 
     protected string $authorizationServerError;
@@ -82,6 +84,11 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
 
                     if (!isset($requestJson->receipt->total)) {
                         $responseBody = self::fakeBadRequestResponse();
+                        $responseCode = 400;
+                    }
+
+                    if (isset($requestJson->receipt->total) && $requestJson->receipt->total !== self::VALID_TOTAL) {
+                        $responseBody = self::fakeInvalidCheckSumResponse();
                         $responseCode = 400;
                     }
                 }
@@ -329,6 +336,14 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
                 "displayName": "Тестовый филиал"
             },
             "state": "REVERSAL"
+        }';
+    }
+
+    static function fakeInvalidCheckSumResponse(): string
+    {
+        return '{
+            "errorCode":"invalidChecksum",
+            "message":"An error has occurred"
         }';
     }
 }

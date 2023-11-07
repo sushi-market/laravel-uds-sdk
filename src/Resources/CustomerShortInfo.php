@@ -8,7 +8,7 @@ class CustomerShortInfo
     public int $id;
 
     /** Идентификатор клиента в UDS */
-    public string $uid;
+    public ?string $uid;
 
     /** Имя и фамилия клиента */
     public string $displayName;
@@ -19,7 +19,7 @@ class CustomerShortInfo
     public function __construct(array $data)
     {
         $this->id = $data['id'];
-        $this->uid = $data['uid'];
+        $this->uid = $data['uid'] ?? null;
         $this->displayName = $data['displayName'];
         $this->baseMembershipTier = isset($data['membershipTier']) ? new MembershipTier($data['membershipTier']) : null;
     }
