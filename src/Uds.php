@@ -12,7 +12,6 @@ use SushiMarket\UdsSdk\Resources\Responses\CalculateTransactionResponse;
 use SushiMarket\UdsSdk\Resources\Responses\CreateTransactionResponse;
 use SushiMarket\UdsSdk\Resources\Responses\RefundTransactionResponse;
 use SushiMarket\UdsSdk\Resources\Responses\SettingsResponse;
-use SushiMarket\UdsSdk\Resources\Tag;
 
 class Uds
 {
@@ -165,7 +164,7 @@ class Uds
      * @param string $code Код на оплату
      * @param array $receipt Информация о чеке
      * @param ExternalCashier|null $cashier Информация о сотруднике
-     * @param Tag[]|null $tags Список тегов компании, назначаемых клиенту при проведении операции
+     * @param int[]|null $tags Список тегов компании, назначаемых клиенту при проведении операции
      * @param Nonce|null $nonce Уникальный идентификатор операции
      * @return CreateTransactionResponse Созданная транзакция
      */
@@ -191,7 +190,7 @@ class Uds
      * @param string $phone Номер телефона
      * @param array $receipt Информация о чеке
      * @param ExternalCashier|null $cashier Информация о сотруднике
-     * @param Tag[]|null $tags Список тегов компании, назначаемых клиенту при проведении операции
+     * @param int[]|null $tags Список тегов компании, назначаемых клиенту при проведении операции
      * @param Nonce|null $nonce Уникальный идентификатор операции
      * @return CreateTransactionResponse Созданная транзакция
      */
@@ -217,7 +216,7 @@ class Uds
      * @param string $uid Идентификатор клиента в UDS
      * @param array $receipt Информация о чеке
      * @param ExternalCashier|null $cashier Информация о сотруднике
-     * @param Tag[]|null $tags Список тегов компании, назначаемых клиенту при проведении операции
+     * @param int[]|null $tags Список тегов компании, назначаемых клиенту при проведении операции
      * @param Nonce|null $nonce Уникальный идентификатор операции
      * @return CreateTransactionResponse Созданная транзакция
      */
@@ -244,7 +243,7 @@ class Uds
      * @param string|null $code Код на оплату
      * @param array|null $participant Информация о клиенте
      * @param ExternalCashier|null $cashier Информация о сотруднике
-     * @param Tag[]|null $tags Список тегов компании, назначаемых клиенту при проведении операции
+     * @param int[]|null $tags Список тегов компании, назначаемых клиенту при проведении операции
      * @param Nonce|null $nonce Уникальный идентификатор операции
      * @return CreateTransactionResponse Созданная транзакция
      * @noinspection PhpUnusedParameterInspection
@@ -276,7 +275,7 @@ class Uds
         }
 
         if ($tags) {
-            $payload['tags'] = array_map(fn(Tag $tag) => $tag->id, $tags);
+            $payload['tags'] = $tags;
         }
 
         if ($nonce) {

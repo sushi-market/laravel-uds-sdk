@@ -9,7 +9,6 @@ use SushiMarket\UdsSdk\Exceptions\NotFoundException;
 use SushiMarket\UdsSdk\Resources\ExternalCashier;
 use SushiMarket\UdsSdk\Resources\Nonce;
 use SushiMarket\UdsSdk\Resources\Responses\CreateTransactionResponse;
-use SushiMarket\UdsSdk\Resources\Tag;
 use SushiMarket\UdsSdk\Services\HttpClientFake;
 
 class CreateTransactionTest extends TestCase
@@ -34,10 +33,7 @@ class CreateTransactionTest extends TestCase
                 'name' => 'Тестовый кассир',
             ]),
             [
-                new Tag([
-                    'id' => 1997,
-                    'name' => 'Постоянный гость',
-                ])
+                1997
             ],
             new Nonce(),
         ];
