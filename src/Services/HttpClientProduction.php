@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Psr\Log\LoggerInterface;
 use SushiMarket\UdsSdk\Exceptions\BadRequestException;
 use SushiMarket\UdsSdk\Exceptions\InternalServerErrorException;
+use SushiMarket\UdsSdk\Exceptions\InvalidCheckSumException;
 use SushiMarket\UdsSdk\Exceptions\NotFoundException;
 use SushiMarket\UdsSdk\Exceptions\UnauthorizedException;
 use SushiMarket\UdsSdk\Guzzle\MessageFormatterJson;
@@ -75,6 +76,7 @@ class HttpClientProduction implements HttpClientInterface
      * @throws RequestException
      * @throws InternalServerErrorException
      * @throws UnauthorizedException
+     * @throws InvalidCheckSumException
      */
     public function exceptionHandler(Response $response, RequestException $e): void
     {
@@ -88,6 +90,7 @@ class HttpClientProduction implements HttpClientInterface
                 'badRequest' => new BadRequestException(),
                 'unauthorized' => new UnauthorizedException(),
                 'notFound' => new NotFoundException(),
+                'invalidChecksum' => new InvalidCheckSumException(),
                 default => $e
             };
         }
