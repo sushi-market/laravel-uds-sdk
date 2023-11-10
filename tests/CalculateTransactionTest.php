@@ -30,6 +30,18 @@ class CalculateTransactionTest extends TestCase
         $this->assertInstanceOf(CalculateTransactionResponse::class, $this->uds->calculateTransactionByCode(HttpClientFake::CODE, $this->receipt));
     }
 
+    public function test_by_code_equals_tags()
+    {
+        $response = $this->uds->calculateTransactionByCode(HttpClientFake::CODE, $this->receipt);
+
+        $this->assertEquals(1997, $response->client->tags[0]->id);
+        $this->assertEquals('Постоянный гость', $response->client->tags[0]->name);
+        $this->assertEquals(1998, $response->client->tags[1]->id);
+        $this->assertEquals('Тег 2', $response->client->tags[1]->name);
+        $this->assertEquals(1999, $response->client->tags[2]->id);
+        $this->assertEquals('Тег 3', $response->client->tags[2]->name);
+    }
+
     public function test_by_invalid_code_throw_not_found_exception()
     {
         $this->expectException(NotFoundException::class);
@@ -41,6 +53,18 @@ class CalculateTransactionTest extends TestCase
         $this->assertInstanceOf(CalculateTransactionResponse::class, $this->uds->calculateTransactionByPhone(HttpClientFake::PHONE, $this->receipt));
     }
 
+    public function test_by_phone_equals_tags()
+    {
+        $response = $this->uds->calculateTransactionByPhone(HttpClientFake::PHONE, $this->receipt);
+
+        $this->assertEquals(1997, $response->client->tags[0]->id);
+        $this->assertEquals('Постоянный гость', $response->client->tags[0]->name);
+        $this->assertEquals(1998, $response->client->tags[1]->id);
+        $this->assertEquals('Тег 2', $response->client->tags[1]->name);
+        $this->assertEquals(1999, $response->client->tags[2]->id);
+        $this->assertEquals('Тег 3', $response->client->tags[2]->name);
+    }
+
     public function test_by_invalid_phone_throw_not_found_exception()
     {
         $this->expectException(NotFoundException::class);
@@ -50,6 +74,18 @@ class CalculateTransactionTest extends TestCase
     public function test_by_valid_uid_is_instance_of_calculate_transaction_response()
     {
         $this->assertInstanceOf(CalculateTransactionResponse::class, $this->uds->calculateTransactionByUid(HttpClientFake::UID, $this->receipt));
+    }
+
+    public function test_by_valid_uid_equals_tags()
+    {
+        $response = $this->uds->calculateTransactionByUid(HttpClientFake::UID, $this->receipt);
+
+        $this->assertEquals(1997, $response->client->tags[0]->id);
+        $this->assertEquals('Постоянный гость', $response->client->tags[0]->name);
+        $this->assertEquals(1998, $response->client->tags[1]->id);
+        $this->assertEquals('Тег 2', $response->client->tags[1]->name);
+        $this->assertEquals(1999, $response->client->tags[2]->id);
+        $this->assertEquals('Тег 3', $response->client->tags[2]->name);
     }
 
     public function test_by_invalid_uid_throw_not_found_exception()

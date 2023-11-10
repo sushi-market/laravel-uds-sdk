@@ -243,7 +243,11 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
                 "uid": "' . self::UID . '",
                 "birthDate": "2000-01-00",
                 "channelName": "UDS App",
-                "tags": [{"id":1997,"name":"Постоянный гость"}],
+                "tags": [
+                    {"id":1997,"name":"Постоянный гость"},
+                    {"id":1998,"name":"Тег 2"},
+                    {"id":1999,"name":"Тег 3"}
+                ],
                 "email": "email@example.com",
                 "avatar": null,
                 "participant": {
