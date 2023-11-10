@@ -48,6 +48,6 @@ class CustomerDetail
         $this->participant = new Participant($data['participant']) ?? null;
         $this->channelName = $data['channelName'] ?? null;
         $this->email = $data['email'] ?? null;
-        $this->tags = array_reduce($data['tags'], fn($item) => new Tag($item), []);
+        $this->tags = array_map(fn ($tag) => new Tag($tag), $data['tags']);
     }
 }
