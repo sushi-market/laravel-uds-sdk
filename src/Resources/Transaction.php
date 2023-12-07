@@ -47,6 +47,12 @@ class Transaction
     /** Оплачиваемая сумма в денежных единицах */
     public float $cash;
 
+    /** Разница между общей суммой чека ($total) и оплачиваемой суммой ($cash) */
+    public float $discount;
+
+    /** Транзакция с использованием сертификата */
+    public bool $isCertificate;
+
     /**
      * @param array{
      *     id: int,
@@ -96,5 +102,8 @@ class Transaction
         $this->origin = isset($data['origin']) ? new Origin($data['origin']) : null;
         $this->total = $data['total'];
         $this->cash = $data['cash'];
+
+        $this->discount = $this->total - $this->cash;
+        $this->isCertificate = $this->discount > 0 && $this->discount !== $this->points;
     }
 }
