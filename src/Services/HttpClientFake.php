@@ -17,6 +17,8 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
 
     public const CODE = '123456';
 
+    public const CERTIFICATE_CODE = '654321';
+
     public const PHONE = '+79999999999';
 
     public const UID = 'xxxxxxxx-test-user-uuid-xxxxxxxx';
@@ -66,6 +68,11 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
                         $responseCode = 200;
                     }
 
+                    if ($code === self::CERTIFICATE_CODE) {
+                        $responseBody = self::fakeCalculateTransactionByCertificateResponse();
+                        $responseCode = 200;
+                    }
+
                     if (!isset($requestJson->receipt->total)) {
                         $responseBody = self::fakeBadRequestResponse();
                         $responseCode = 400;
@@ -79,6 +86,11 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
 
                     if ($code === self::CODE || $phone === self::PHONE || $uid === self::UID) {
                         $responseBody = self::fakeCreateTransactionResponse();
+                        $responseCode = 200;
+                    }
+
+                    if ($code === self::CERTIFICATE_CODE) {
+                        $responseBody = self::fakeCreateTransactionByCertificateResponse();
                         $responseCode = 200;
                     }
 
@@ -274,10 +286,106 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
         }';
     }
 
+    static function fakeCalculateTransactionByCertificateResponse(): string
+    {
+        return '{
+            "purchase": {
+                "cash": 700,
+                "discountAmount": 0.00,
+                "unredeemableTotal": 0.00,
+                "certificatePoints": 300.00,
+                "maxPoints": 300,
+                "extras": {},
+                "netDiscount": 300,
+                "points": 0.00,
+                "netDiscountPercent": 0.3,
+                "cashBack": 210,
+                "total": 1000,
+                "cashTotal": 700,
+                "skipLoyaltyTotal": 0.00,
+                "pointsPercent": 0.3,
+                "maxScoresDiscount": 50,
+                "discountPercent": 0
+            },
+            "user": {
+                "phone": "+79999999999",
+                "gender": "NOT_SPECIFIED",
+                "uid": "' . self::UID . '",
+                "birthDate": "2000-01-00",
+                "channelName": "UDS App",
+                "tags": [
+                    {"id":1997,"name":"Постоянный гость"},
+                    {"id":1998,"name":"Тег 2"},
+                    {"id":1999,"name":"Тег 3"}
+                ],
+                "email": "email@example.com",
+                "avatar": null,
+                "participant": {
+                    "inviterId": null,
+                    "discountRate": 0.00,
+                    "cashbackRate": 3,
+                    "dateCreated": "2022-01-01T00:00:00.000Z",
+                    "points": 300,
+                    "id": 1099576113739,
+                    "lastTransactionTime": "2023-01-01T00:00:00.000Z",
+                    "membershipTier": {
+                        "uid": "base",
+                        "name": "Тест - 1",
+                        "conditions": {
+                            "effectiveInvitedCount": null,
+                            "totalCashSpent": null
+                        },
+                        "maxScoresDiscount": 50,
+                        "rate": 3
+                    }
+                },
+                "displayName": "Тестовый Профиль"
+            }
+        }';
+    }
+
     static function fakeCreateTransactionResponse(): string
     {
         return '{
             "cash": 1000,
+            "action": "PURCHASE",
+            "cashier": {
+                "id": 1234567890,
+                "displayName": "Тестовый кассир"
+            },
+            "customer": {
+                "uid": "' . self::UID . '",
+                "id": 1234567890,
+                "membershipTier": {
+                    "conditions": {
+                        "effectiveInvitedCount": null,
+                        "totalCashSpent": null
+                    },
+                    "maxScoresDiscount": 50,
+                    "name": "Тест - 1",
+                    "rate": 3,
+                    "uid": "base"
+                },
+                "displayName": "Тестовый Профиль"
+            },
+            "origin": null,
+            "dateCreated": "2022-01-01T00:00:00.000Z",
+            "points": 0,
+            "id": ' . self::TRANSACTION_ID . ',
+            "total": 1000,
+            "receiptNumber": "123456",
+            "branch": {
+                "id": 1234567890,
+                "displayName": "Тестовый филиал"
+            },
+            "state": "NORMAL"
+        }';
+    }
+
+    static function fakeCreateTransactionByCertificateResponse(): string
+    {
+        return '{
+            "cash": 600,
             "action": "PURCHASE",
             "cashier": {
                 "id": 1234567890,

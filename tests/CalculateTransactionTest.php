@@ -30,6 +30,13 @@ class CalculateTransactionTest extends TestCase
         $this->assertInstanceOf(CalculateTransactionResponse::class, $this->uds->calculateTransactionByCode(HttpClientFake::CODE, $this->receipt));
     }
 
+    public function test_by_code_is_instance_of_calcualte_transaction_response_by_certificate()
+    {
+        $response = $this->uds->calculateTransactionByCode(HttpClientFake::CERTIFICATE_CODE, $this->receipt);
+        $this->assertInstanceOf(CalculateTransactionResponse::class, $response);
+        $this->assertEquals(300.0, $response->purchase->certificatePoints);
+    }
+
     public function test_by_code_equals_tags()
     {
         $response = $this->uds->calculateTransactionByCode(HttpClientFake::CODE, $this->receipt);

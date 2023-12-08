@@ -44,6 +44,13 @@ class CreateTransactionTest extends TestCase
         $this->assertInstanceOf(CreateTransactionResponse::class, $this->uds->createTransactionByCode(HttpClientFake::CODE, ...$this->transactionData));
     }
 
+    public function test_by_certificate_code_is_instance_of_create_transaction_response_by_certificate()
+    {
+        $response = $this->uds->createTransactionByCode(HttpClientFake::CERTIFICATE_CODE, ...$this->transactionData);
+        $this->assertInstanceOf(CreateTransactionResponse::class, $response);
+        $this->assertTrue($response->isCertificate);
+    }
+
     public function test_by_invalid_code_throw_not_found_exception()
     {
         $this->expectException(NotFoundException::class);
