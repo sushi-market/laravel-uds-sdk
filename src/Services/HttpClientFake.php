@@ -347,7 +347,7 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
     static function fakeCreateTransactionResponse(): string
     {
         return '{
-            "cash": 1000,
+            "cash": 700,
             "action": "PURCHASE",
             "cashier": {
                 "id": 1234567890,
@@ -370,7 +370,7 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
             },
             "origin": null,
             "dateCreated": "2022-01-01T00:00:00.000Z",
-            "points": 0,
+            "points": 300,
             "id": ' . self::TRANSACTION_ID . ',
             "total": 1000,
             "receiptNumber": "123456",
@@ -385,7 +385,7 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
     static function fakeCreateTransactionByCertificateResponse(): string
     {
         return '{
-            "cash": 600,
+            "cash": 700,
             "action": "PURCHASE",
             "cashier": {
                 "id": 1234567890,
