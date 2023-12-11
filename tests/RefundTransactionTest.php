@@ -14,6 +14,18 @@ class RefundTransactionTest extends TestCase
         $this->assertInstanceOf(RefundTransactionResponse::class, $this->uds->refundTransaction(HttpClientFake::TRANSACTION_ID, 100));
     }
 
+    public function test_response_body_is_not_certificate()
+    {
+        $response = $this->uds->refundTransaction(HttpClientFake::TRANSACTION_ID, 100);
+        $this->assertFalse($response->isCertificate);
+    }
+
+    public function test_certificate_response_body_is_certificate()
+    {
+        $response = $this->uds->refundTransaction(HttpClientFake::TRANSACTION_ID_WITH_CERTIFICATE, 100);
+        $this->assertTrue($response->isCertificate);
+    }
+
     public function test_invalid_id_throw_not_found_exception()
     {
         $this->expectException(NotFoundException::class);

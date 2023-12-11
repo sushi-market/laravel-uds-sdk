@@ -103,7 +103,7 @@ class Transaction
         $this->total = $data['total'];
         $this->cash = $data['cash'];
 
-        $this->discount = $this->total - $this->cash;
-        $this->isCertificate = $this->discount > 0 && $this->discount !== $this->points;
+        $this->discount = abs($this->total - $this->cash);
+        $this->isCertificate = $this->discount > 0 && $this->discount !== abs($this->points);
     }
 }

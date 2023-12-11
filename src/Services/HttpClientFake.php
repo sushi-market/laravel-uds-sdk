@@ -25,6 +25,8 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
 
     public const TRANSACTION_ID = 1234567890;
 
+    public const TRANSACTION_ID_WITH_CERTIFICATE = 987654321;
+
     public const VALID_TOTAL = 1000;
 
     protected string $authorization;
@@ -107,6 +109,11 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
 
                 if ($request->method() === 'POST' && $request->url() === "$baseUrl/operations/" . self::TRANSACTION_ID . '/refund') {
                     $responseBody = self::fakeRefundTransactionResponse();
+                    $responseCode = 200;
+                }
+
+                if ($request->method() === 'POST' && $request->url() === "$baseUrl/operations/" . self::TRANSACTION_ID_WITH_CERTIFICATE . '/refund') {
+                    $responseBody = self::fakeRefundTransactionByCertificateResponse();
                     $responseCode = 200;
                 }
             }
@@ -370,7 +377,7 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
             },
             "origin": null,
             "dateCreated": "2022-01-01T00:00:00.000Z",
-            "points": 300,
+            "points": -300,
             "id": ' . self::TRANSACTION_ID . ',
             "total": 1000,
             "receiptNumber": "123456",
@@ -423,7 +430,38 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
     static function fakeRefundTransactionResponse(): string
     {
         return '{
-            "cash": -100.00,
+            "cash": -90.00,
+            "action": "PURCHASE",
+            "cashier": {
+                "id": 1234567890,
+                "displayName": "Тестовый кассир"
+            },
+            "customer": {
+                "uid": "' . self::UID . '",
+                "id": 1234567890,
+                "membershipTier": null,
+                "displayName": "Тестовый Профиль"
+            },
+            "origin": {
+                "id": ' . self::TRANSACTION_ID . '
+            },
+            "dateCreated": "2022-01-01T00:00:00.000Z",
+            "points": 10.00,
+            "id": ' . self::TRANSACTION_ID + 1 . ',
+            "total": -100,
+            "receiptNumber": null,
+            "branch": {
+                "id": 1234567890,
+                "displayName": "Тестовый филиал"
+            },
+            "state": "REVERSAL"
+        }';
+    }
+
+    static function fakeRefundTransactionByCertificateResponse(): string
+    {
+        return '{
+            "cash": -90.00,
             "action": "PURCHASE",
             "cashier": {
                 "id": 1234567890,
