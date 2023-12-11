@@ -50,7 +50,12 @@ class CreateTransactionTest extends TestCase
         $this->assertEquals(300, $response->discount);
     }
 
-    public function test_by_certificate_code_response_body_is_certificate_true()
+    public function test_by_code_response_body_is_not_certificate() {
+        $response = $this->uds->createTransactionByCode(HttpClientFake::CODE, ...$this->transactionData);
+        $this->assertFalse($response->isCertificate);
+    }
+
+    public function test_by_certificate_code_response_body_is_certificate()
     {
         $response = $this->uds->createTransactionByCode(HttpClientFake::CERTIFICATE_CODE, ...$this->transactionData);
         $this->assertTrue($response->isCertificate);
@@ -59,11 +64,6 @@ class CreateTransactionTest extends TestCase
     public function test_by_certificate_code_response_body_discount_is_300() {
         $response = $this->uds->createTransactionByCode(HttpClientFake::CERTIFICATE_CODE, ...$this->transactionData);
         $this->assertEquals(300.0, $response->discount);
-    }
-
-    public function test_by_code_response_body_is_certificate_false() {
-        $response = $this->uds->createTransactionByCode(HttpClientFake::CODE, ...$this->transactionData);
-        $this->assertFalse($response->isCertificate);
     }
 
     public function test_by_invalid_code_throw_not_found_exception()
