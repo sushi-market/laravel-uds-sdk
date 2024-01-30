@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace SushiMarket\UdsSdk\Guzzle;
 
@@ -21,7 +22,7 @@ class MessageFormatterJson implements MessageFormatterInterface
             'request_headers' => $request->getHeaders(),
             'request_body' => json_validate($request_body) ? json_decode($request_body) : $request_body,
             'response_headers' => $response?->getHeaders(),
-            'response_body' => json_validate($response_body) ? json_decode($response_body) : $response_body,
+            'response_body' => json_validate($response_body ?? '') ? json_decode($response_body) : $response_body,
         ], JSON_UNESCAPED_UNICODE);
     }
 }
