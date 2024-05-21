@@ -1,10 +1,12 @@
 <?php
+
 declare(strict_types=1);
+
+namespace SushiMarket\UdsSdk\Test;
 
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use SushiMarket\UdsSdk\Guzzle\MessageFormatterJson;
-use SushiMarket\UdsSdk\Test\TestCase;
 
 class MessageFormatterJsonTest extends TestCase
 {
