@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SushiMarket\UdsSdk\Resources\Responses;
 
 use SushiMarket\UdsSdk\Resources\CustomerDetail;

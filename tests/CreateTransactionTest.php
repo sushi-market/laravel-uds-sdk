@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SushiMarket\UdsSdk\Test;
 
 use SushiMarket\UdsSdk\Exceptions\BadRequestException;
@@ -29,7 +31,7 @@ class CreateTransactionTest extends TestCase
                 'unredeemableTotal' => null,
             ],
             new ExternalCashier([
-                'externalId' => 123,
+                'externalId' => '123',
                 'name' => 'Тестовый кассир',
             ]),
             [

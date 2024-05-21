@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SushiMarket\UdsSdk\Services;
 
 use DateTime;
@@ -24,7 +26,7 @@ class HttpClientProduction implements HttpClientInterface
 {
     protected PendingRequest $client;
 
-    public function __construct(string $baseUrl, int $companyId, string $token)
+    public function __construct(string $baseUrl, string $companyId, string $token)
     {
         $this->client = Http::baseUrl($baseUrl)->withBasicAuth($companyId, $token);
         $this->enableThrowing()->enableDebugHeaders()->enableLogging();
