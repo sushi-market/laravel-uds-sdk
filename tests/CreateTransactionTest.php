@@ -31,7 +31,7 @@ class CreateTransactionTest extends TestCase
                 'unredeemableTotal' => null,
             ],
             new ExternalCashier([
-                'externalId' => 123,
+                'externalId' => '123',
                 'name' => 'Тестовый кассир',
             ]),
             [
