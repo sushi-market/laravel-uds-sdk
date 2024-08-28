@@ -18,6 +18,7 @@ use SushiMarket\UdsSdk\Exceptions\BadRequestException;
 use SushiMarket\UdsSdk\Exceptions\InternalServerErrorException;
 use SushiMarket\UdsSdk\Exceptions\InvalidCheckSumException;
 use SushiMarket\UdsSdk\Exceptions\NotFoundException;
+use SushiMarket\UdsSdk\Exceptions\ParticipantIsBlockedException;
 use SushiMarket\UdsSdk\Exceptions\UnauthorizedException;
 use SushiMarket\UdsSdk\Guzzle\MessageFormatterJson;
 use SushiMarket\UdsSdk\Interfaces\HttpClientInterface;
@@ -79,6 +80,7 @@ class HttpClientProduction implements HttpClientInterface
      * @throws InternalServerErrorException
      * @throws UnauthorizedException
      * @throws InvalidCheckSumException
+     * @throws ParticipantIsBlockedException
      */
     public function exceptionHandler(Response $response, RequestException $e): void
     {
@@ -91,6 +93,7 @@ class HttpClientProduction implements HttpClientInterface
             throw match($json['errorCode']) {
                 'badRequest' => new BadRequestException(),
                 'unauthorized' => new UnauthorizedException(),
+                'participantIsBlocked' => new ParticipantIsBlockedException(),
                 'notFound' => new NotFoundException(),
                 'invalidChecksum' => new InvalidCheckSumException(),
                 default => $e
