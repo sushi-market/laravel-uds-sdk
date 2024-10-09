@@ -23,6 +23,8 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
 
     public const PHONE = '+79999999999';
 
+    public const PHONE_BLOCKED = '+71111119999';
+
     public const UID = 'xxxxxxxx-test-user-uuid-xxxxxxxx';
 
     public const TRANSACTION_ID = 1234567890;
@@ -105,6 +107,11 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
 
                     if (isset($requestJson->receipt->total) && $requestJson->receipt->total !== self::VALID_TOTAL) {
                         $responseBody = self::fakeInvalidCheckSumResponse();
+                        $responseCode = 400;
+                    }
+
+                    if ($phone === self::PHONE_BLOCKED) {
+                        $responseBody = self::fakeParticipantIsBlocked();
                         $responseCode = 400;
                     }
                 }
@@ -496,6 +503,14 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
         return '{
             "errorCode":"invalidChecksum",
             "message":"An error has occurred"
+        }';
+    }
+
+    static function fakeParticipantIsBlocked(): string
+    {
+        return '{
+            "errorCode": "participantIsBlocked",
+            "message": "This company has blocked you, but you can use UDS in other companies."
         }';
     }
 }

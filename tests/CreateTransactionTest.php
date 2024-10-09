@@ -8,6 +8,7 @@ use SushiMarket\UdsSdk\Exceptions\BadRequestException;
 use SushiMarket\UdsSdk\Exceptions\InternalServerErrorException;
 use SushiMarket\UdsSdk\Exceptions\InvalidCheckSumException;
 use SushiMarket\UdsSdk\Exceptions\NotFoundException;
+use SushiMarket\UdsSdk\Exceptions\ParticipantIsBlockedException;
 use SushiMarket\UdsSdk\Resources\ExternalCashier;
 use SushiMarket\UdsSdk\Resources\Nonce;
 use SushiMarket\UdsSdk\Resources\Responses\CreateTransactionResponse;
@@ -108,6 +109,12 @@ class CreateTransactionTest extends TestCase
         $transactionData = $this->transactionData;
         $transactionData[0]['total'] = 10001;
         $this->uds->createTransactionByCode(HttpClientFake::CODE, ...$transactionData);
+    }
+
+    public function test_participant_is_blocked()
+    {
+        $this->expectException(ParticipantIsBlockedException::class);
+        $this->uds->createTransactionByPhone(HttpClientFake::PHONE_BLOCKED, ...$this->transactionData);
     }
 
     public function test_bad_request_exception()
