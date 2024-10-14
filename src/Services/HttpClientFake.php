@@ -111,7 +111,7 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
                     }
 
                     if ($phone === self::PHONE_BLOCKED) {
-                        $responseBody = self::fakeParticipantIsBlocked();
+                        $responseBody = self::fakeParticipantIsBlockedResponse();
                         $responseCode = 400;
                     }
                 }
@@ -506,7 +506,7 @@ class HttpClientFake extends HttpClientProduction implements HttpClientInterface
         }';
     }
 
-    static function fakeParticipantIsBlocked(): string
+    static function fakeParticipantIsBlockedResponse(): string
     {
         return '{
             "errorCode": "participantIsBlocked",

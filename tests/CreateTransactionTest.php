@@ -111,7 +111,7 @@ class CreateTransactionTest extends TestCase
         $this->uds->createTransactionByCode(HttpClientFake::CODE, ...$transactionData);
     }
 
-    public function test_participant_is_blocked()
+    public function test_participant_is_blocked_exception()
     {
         $this->expectException(ParticipantIsBlockedException::class);
         $this->uds->createTransactionByPhone(HttpClientFake::PHONE_BLOCKED, ...$this->transactionData);
